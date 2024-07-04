@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace WebhookManager;
 
 class Webhook
@@ -9,6 +7,9 @@ class Webhook
     private string $url;
     private array  $headers;
     private string $payload;
+    private int    $attempts = 0;
+    private int    $responseCode;
+    private string $responseBody;
 
     public function __construct(string $url, array $headers = [], string $payload = '')
     {
@@ -17,18 +18,54 @@ class Webhook
         $this->payload = $payload;
     }
 
-    public function getUrl() : string
+    public function getUrl(): string
     {
         return $this->url;
     }
 
-    public function getHeaders() : array
+    public function getHeaders(): array
     {
         return $this->headers;
     }
 
-    public function getPayload() : string
+    public function getPayload(): string
     {
         return $this->payload;
+    }
+
+    public function getAttempts(): int
+    {
+        return $this->attempts;
+    }
+
+    public function setAttempts(int $attempts): void
+    {
+        $this->attempts = $attempts;
+    }
+
+    public function getResponseCode(): int
+    {
+        return $this->responseCode;
+    }
+
+    public function setResponseCode(int $responseCode): void
+    {
+        $this->responseCode = $responseCode;
+    }
+
+    public function getResponseBody(): string
+    {
+        return $this->responseBody;
+    }
+
+    public function setResponseBody(string $responseBody): void
+    {
+        $this->responseBody = $responseBody;
+    }
+
+    public function setResponse(int $responseCode, string $responseBody): void
+    {
+        $this->responseCode = $responseCode;
+        $this->responseBody = $responseBody;
     }
 }

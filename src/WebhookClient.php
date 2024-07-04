@@ -1,24 +1,44 @@
 <?php
 
-declare(strict_types=1);
-
 namespace WebhookManager;
+
+use GuzzleHttp\Client;
 
 class WebhookClient
 {
-    public function send(Webhook $webhook) : void
+    private Client $httpClient;
+    private WebhookRetryPolicy $retryPolicy;
+
+    public function __construct(Client $httpClient, WebhookRetryPolicy $retryPolicy)
     {
-        $data = http_build_query(['payload' => $webhook->getPayload()]);
+        $this->httpClient = $httpClient;
+        $this->retryPolicy = $retryPolicy;
+    }
 
-        $options = [
-            'http' => [
-                'method'  => 'POST',
-                'header'  => 'Content-type: application/x-www-form-urlencoded',
-                'content' => $data,
-            ],
-        ];
+    public function send(Webhook $webhook): void
+    {
+        $attempts = $webhook->getAttempts();
 
-        $context = stream_context_create($options);
-        file_get_contents($webhook->getUrl(), false, $context);
+        try {
+            $response = $this->httpClient->request(
+                'POST',
+                $webhook->getUrl(),
+                [
+                    'headers' => $webhook->getHeaders(),
+                    'body' => $webhook->getPayload(),
+                ]
+            );
+
+            $webhook->setResponse($response->getStatusCode(), $response->getBody()->getContents());
+            $webhook->setAttempts($attempts + 1);
+
+        } catch (\Exception $exception) {
+            if (!$this->retryPolicy->shouldRetry($webhook, $exception)) {
+                throw $exception;
+            }
+
+            usleep(100000); // Wait for 100ms before retrying
+            $this->send($webhook);
+        }
     }
 }

@@ -8,10 +8,12 @@ class WebhookManager
 {
     private array $handlers = [];
     private WebhookClient $client;
+    private WebhookAuthentication $authentication;
 
-    public function __construct(WebhookClient $client)
+    public function __construct(WebhookClient $client, WebhookAuthentication $authentication)
     {
         $this->client = $client;
+        $this->authentication = $authentication;
     }
 
     public function registerHandler(string $eventName, WebhookHandlerInterface $handler): void
@@ -21,8 +23,8 @@ class WebhookManager
 
     public function triggerEvent(WebhookEvent $event): void
     {
-        if (!isset($this->handlers[$event->getName()])) {
-            return;
+        if (!$this->authentication->authenticate($event->getWebhook())) {
+            throw new \RuntimeException('Webhook authentication failed');
         }
 
         foreach ($this->handlers[$event->getName()] as $handler) {
