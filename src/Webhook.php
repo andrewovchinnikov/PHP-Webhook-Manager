@@ -4,17 +4,17 @@ namespace WebhookManager;
 
 class Webhook
 {
-    private string $url;
-    private array  $headers;
-    private string $payload;
-    private int    $attempts = 0;
-    private int    $responseCode;
-    private string $responseBody;
+    private string                  $url;
+    private int                     $attempts = 0;
+    private int                     $responseCode;
+    private string                  $responseBody;
+    private WebhookHeaders          $headers;
+    private WebhookPayloadInterface $payload;
 
-    public function __construct(string $url, array $headers = [], WebhookPayloadInterface $payload = null)
+    public function __construct(string $url, WebhookHeaders $headers = null, WebhookPayloadInterface $payload = null)
     {
         $this->url          = $url;
-        $this->headers      = $headers;
+        $this->headers      = $headers ?? new WebhookHeaders();
         $this->payload      = $payload ?? new JsonWebhookPayload();
         $this->responseCode = 0;
     }
@@ -24,7 +24,7 @@ class Webhook
         return $this->url;
     }
 
-    public function getHeaders() : array
+    public function getHeaders() : WebhookHeaders
     {
         return $this->headers;
     }
