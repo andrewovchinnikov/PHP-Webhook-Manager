@@ -18,7 +18,9 @@
     "php":               ">=7.4",
     "ext-json":          "*",
     "guzzlehttp/guzzle": "^7.8",
-    "firebase/php-jwt":  "^5.0"
+    "firebase/php-jwt":  "^5.0",
+    "ext-simplexml":     "*",
+    "symfony/yaml": "^5.3"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"

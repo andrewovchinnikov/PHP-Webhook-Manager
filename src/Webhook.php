@@ -11,59 +11,60 @@ class Webhook
     private int    $responseCode;
     private string $responseBody;
 
-    public function __construct(string $url, array $headers = [], string $payload = '')
+    public function __construct(string $url, array $headers = [], WebhookPayloadInterface $payload = null)
     {
-        $this->url     = $url;
-        $this->headers = $headers;
-        $this->payload = $payload;
+        $this->url          = $url;
+        $this->headers      = $headers;
+        $this->payload      = $payload ?? new JsonWebhookPayload();
+        $this->responseCode = 0;
     }
 
-    public function getUrl(): string
+    public function getUrl() : string
     {
         return $this->url;
     }
 
-    public function getHeaders(): array
+    public function getHeaders() : array
     {
         return $this->headers;
     }
 
-    public function getPayload(): string
+    public function getPayload() : string
     {
         return $this->payload;
     }
 
-    public function getAttempts(): int
+    public function getAttempts() : int
     {
         return $this->attempts;
     }
 
-    public function setAttempts(int $attempts): void
+    public function setAttempts(int $attempts) : void
     {
         $this->attempts = $attempts;
     }
 
-    public function getResponseCode(): int
+    public function getResponseCode() : int
     {
         return $this->responseCode;
     }
 
-    public function setResponseCode(int $responseCode): void
+    public function setResponseCode(int $responseCode) : void
     {
         $this->responseCode = $responseCode;
     }
 
-    public function getResponseBody(): string
+    public function getResponseBody() : string
     {
         return $this->responseBody;
     }
 
-    public function setResponseBody(string $responseBody): void
+    public function setResponseBody(string $responseBody) : void
     {
         $this->responseBody = $responseBody;
     }
 
-    public function setResponse(int $responseCode, string $responseBody): void
+    public function setResponse(int $responseCode, string $responseBody) : void
     {
         $this->responseCode = $responseCode;
         $this->responseBody = $responseBody;

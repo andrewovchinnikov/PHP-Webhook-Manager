@@ -17,7 +17,7 @@ class HttpWebhookClient implements WebhookClientInterface
         $this->httpClient = $httpClient;
     }
 
-    public function send(Webhook $webhook): ResponseInterface
+    public function send(Webhook $webhook) : ResponseInterface
     {
         try {
             $response = $this->httpClient->request(
@@ -25,9 +25,11 @@ class HttpWebhookClient implements WebhookClientInterface
                 $webhook->getUrl(),
                 [
                     'headers' => $webhook->getHeaders(),
-                    'body' => $webhook->getPayload(),
+                    'body'    => (string)$webhook->getPayload(),
                 ]
             );
+
+            $webhook->setResponseCode($response->getStatusCode());
 
             return $response;
         } catch (RequestException $e) {
