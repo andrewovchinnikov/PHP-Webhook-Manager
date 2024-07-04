@@ -10,13 +10,25 @@ class Webhook
     private string                  $responseBody;
     private WebhookHeaders          $headers;
     private WebhookPayloadInterface $payload;
+    private string                 $clientIp;
 
-    public function __construct(string $url, WebhookHeaders $headers = null, WebhookPayloadInterface $payload = null)
+    public function __construct(string $url, WebhookHeaders $headers = null, WebhookPayloadInterface $payload = null, string $clientIp = '')
     {
         $this->url          = $url;
         $this->headers      = $headers ?? new WebhookHeaders();
         $this->payload      = $payload ?? new JsonWebhookPayload();
         $this->responseCode = 0;
+        $this->clientIp     = $clientIp;
+    }
+
+    public function getClientIp() : string
+    {
+        return $this->clientIp;
+    }
+
+    public function setClientIp(string $clientIp) : void
+    {
+        $this->clientIp = $clientIp;
     }
 
     public function getUrl() : string

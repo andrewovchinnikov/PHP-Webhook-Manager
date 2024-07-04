@@ -18,15 +18,23 @@ class WebhookManager
         $this->logger         = $logger;
     }
 
-    public function registerHandler(string $eventName, WebhookHandlerInterface $handler) : void
+    public function registerHandler(string $eventName, WebhookHandlerInterface $handler, WebhookAuthentication $authentication = null) : void
     {
-        $this->handlers[$eventName][] = $handler;
+        if (!isset($this->handlers[$eventName])) {
+            $this->handlers[$eventName] = [];
+        }
+
+        $this->handlers[$eventName][] = [
+            'handler'        => $handler,
+            'authentication' => $authentication,
+        ];
     }
+
 
     /**
      * @throws \Exception
      */
-    public function triggerEvent(WebhookEvent $event): void
+    public function triggerEvent(WebhookEvent $event) : void
     {
         $this->logger->log(sprintf('Triggering event "%s"', $event->getName()));
 
