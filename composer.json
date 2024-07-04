@@ -1,28 +1,29 @@
 {
-  "name": "php-webhook-manager/php-webhook-manager",
+  "name":        "php-webhook-manager/php-webhook-manager",
   "description": "A simple and flexible library for working with webhooks in PHP applications.",
-  "version": "0.1.0",
-  "license": "MIT",
-  "authors": [
+  "version":     "0.1.0",
+  "license":     "MIT",
+  "authors":     [
     {
-      "name": "Andrew Ovchinnikov",
+      "name":  "Andrew Ovchinnikov",
       "email": "stern.promo@yandex.ru"
     }
   ],
-  "autoload": {
+  "autoload":    {
     "psr-4": {
       "WebhookManager\\": "src/"
     }
   },
-  "require": {
-    "php":      ">=7.4",
-    "ext-json": "*",
-    "guzzlehttp/guzzle": "^7.8"
+  "require":     {
+    "php":               ">=7.4",
+    "ext-json":          "*",
+    "guzzlehttp/guzzle": "^7.8",
+    "firebase/php-jwt":  "^5.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"
   },
-  "scripts": {
+  "scripts":     {
     "test": "vendor/bin/phpunit"
   }
 }
