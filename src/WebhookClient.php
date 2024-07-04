@@ -4,18 +4,18 @@ namespace WebhookManager;
 
 use GuzzleHttp\Client;
 
-class WebhookClient
+class WebhookClient implements WebhookClientInterface
 {
-    private Client $httpClient;
+    private Client             $httpClient;
     private WebhookRetryPolicy $retryPolicy;
 
     public function __construct(Client $httpClient, WebhookRetryPolicy $retryPolicy)
     {
-        $this->httpClient = $httpClient;
+        $this->httpClient  = $httpClient;
         $this->retryPolicy = $retryPolicy;
     }
 
-    public function send(Webhook $webhook): void
+    public function send(Webhook $webhook) : \Psr\Http\Message\ResponseInterface
     {
         $attempts = $webhook->getAttempts();
 
@@ -25,12 +25,14 @@ class WebhookClient
                 $webhook->getUrl(),
                 [
                     'headers' => $webhook->getHeaders(),
-                    'body' => $webhook->getPayload(),
+                    'body'    => $webhook->getPayload(),
                 ]
             );
 
             $webhook->setResponse($response->getStatusCode(), $response->getBody()->getContents());
             $webhook->setAttempts($attempts + 1);
+
+            return $response;
 
         } catch (\Exception $exception) {
             if (!$this->retryPolicy->shouldRetry($webhook, $exception)) {
