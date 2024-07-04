@@ -6,15 +6,12 @@ require_once __DIR__.'/vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
-use Symfony\Component\Yaml\Yaml;
 use WebhookManager\AsyncWebhookClient;
-use WebhookManager\HttpWebhookClient;
 use WebhookManager\JwtAuthentication;
 use WebhookManager\JwtWebhookHandler;
 use WebhookManager\SimpleRetryPolicy;
 use WebhookManager\SimpleWebhookLogger;
 use WebhookManager\Webhook;
-use WebhookManager\WebhookDeliveryException;
 use WebhookManager\WebhookEvent;
 use WebhookManager\WebhookManager;
 use WebhookManager\JsonWebhookPayload;
