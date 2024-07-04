@@ -17,15 +17,15 @@ class HttpWebhookClient implements WebhookClientInterface
         $this->httpClient = $httpClient;
     }
 
-    public function send(Webhook $webhook): ResponseInterface
+    public function send(Webhook $webhook) : ResponseInterface
     {
         try {
             $response = $this->httpClient->request(
                 'POST',
                 $webhook->getUrl(),
                 [
-                    'headers' => $webhook->getHeaders()->getHeaders(),
-                    'body' => (string) $webhook->getPayload(),
+                    'headers' => $webhook->getHeaders(),
+                    'body'    => (string)$webhook->getPayload(),
                 ]
             );
 
@@ -36,5 +36,4 @@ class HttpWebhookClient implements WebhookClientInterface
             throw new WebhookDeliveryException('Failed to deliver webhook', $e->getCode(), $e);
         }
     }
-
 }

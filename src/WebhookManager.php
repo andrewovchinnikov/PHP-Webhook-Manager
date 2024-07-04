@@ -40,12 +40,12 @@ class WebhookManager
             $handler->handle($event);
         }
 
-        try {
-            $response = $this->client->send($event->getWebhook());
-            $statusCode = $response->getStatusCode();
-            $this->logger->log(sprintf('Event "%s" completed with response code %d', $event->getName(), $statusCode));
-        } catch (WebhookDeliveryException $e) {
-            $this->logger->log(sprintf('Error delivering webhook for event "%s": %s', $event->getName(), $e->getMessage()));
+        if ($this->client instanceof AsyncWebhookClient) {
+            $this->client->send($event->getWebhook())->wait();
+        } else {
+            $this->client->send($event->getWebhook());
         }
+
+        $this->logger->log(sprintf('Event "%s" completed with response code %d', $event->getName(), $event->getWebhook()->getResponseCode()));
     }
 }
