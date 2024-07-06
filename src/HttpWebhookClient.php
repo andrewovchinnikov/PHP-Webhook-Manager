@@ -5,18 +5,41 @@ declare(strict_types=1);
 namespace WebhookManager;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
 
+/**
+ * Class for sending webhooks using HTTP.
+ */
 class HttpWebhookClient implements WebhookClientInterface
 {
+    /**
+     * HTTP client for sending webhooks.
+     *
+     * @var Client
+     */
     private Client $httpClient;
 
+    /**
+     * Class constructor.
+     *
+     * @param Client $httpClient HTTP client for sending webhooks.
+     */
     public function __construct(Client $httpClient)
     {
         $this->httpClient = $httpClient;
     }
 
+    /**
+     * Sends webhook and returns response.
+     *
+     * @param Webhook $webhook Webhook to send.
+     *
+     * @return ResponseInterface Response from webhook server.
+     *
+     * @throws WebhookDeliveryException|GuzzleException If failed to deliver webhook.
+     */
     public function send(Webhook $webhook) : ResponseInterface
     {
         try {
@@ -25,7 +48,7 @@ class HttpWebhookClient implements WebhookClientInterface
                 $webhook->getUrl(),
                 [
                     'headers' => $webhook->getHeaders(),
-                    'body'    => (string)$webhook->getPayload(),
+                    'body'    => $webhook->getPayload(),
                 ]
             );
 

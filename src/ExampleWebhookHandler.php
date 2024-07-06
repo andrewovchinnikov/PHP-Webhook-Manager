@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace WebhookManager;
 
+/**
+ * Example webhook event handler.
+ */
 class ExampleWebhookHandler implements WebhookHandlerInterface
 {
+    /**
+     * Handles webhook event.
+     *
+     * @param WebhookEvent $event Webhook event.
+     */
     public function handle(WebhookEvent $event) : void
     {
-        // Здесь вы можете добавить свой код для обработки события веб-хука
+        // You can add your code for handling webhook event here
         echo sprintf('Received event "%s" with data: %s', $event->getName(), $event->getWebhook()->getPayload());
     }
 }

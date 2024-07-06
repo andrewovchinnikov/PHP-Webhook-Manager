@@ -2,7 +2,9 @@
 
 namespace WebhookManager;
 
+use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 class WebhookClient implements WebhookClientInterface
 {
@@ -15,6 +17,10 @@ class WebhookClient implements WebhookClientInterface
         $this->retryPolicy = $retryPolicy;
     }
 
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function send(Webhook $webhook) : \Psr\Http\Message\ResponseInterface
     {
         $attempts = $webhook->getAttempts();
@@ -34,13 +40,15 @@ class WebhookClient implements WebhookClientInterface
 
             return $response;
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             if (!$this->retryPolicy->shouldRetry($webhook, $exception)) {
                 throw $exception;
             }
 
             usleep(100000); // Wait for 100ms before retrying
-            $this->send($webhook);
+
+            // Recursively call the 'send' method with the updated webhook object
+            return $this->send($webhook);
         }
     }
 }
