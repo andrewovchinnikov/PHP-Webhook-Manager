@@ -6,8 +6,8 @@ require_once __DIR__.'/vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
+use WebhookManager\Authentication\JwtAuthentication;
 use WebhookManager\HttpWebhookClient;
-use WebhookManager\JwtAuthentication;
 use WebhookManager\JwtWebhookHandler;
 use WebhookManager\SimpleRetryPolicy;
 use WebhookManager\SimpleWebhookLogger;

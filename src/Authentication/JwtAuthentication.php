@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace WebhookManager;
+namespace WebhookManager\Authentication;
 
 use Exception;
 use Firebase\JWT\JWT;
+use WebhookManager\Webhook;
+use WebhookManager\WebhookAuthentication;
 
 /**
  * Class JwtAuthentication

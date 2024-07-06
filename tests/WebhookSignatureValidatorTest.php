@@ -1,8 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use WebhookManager\Validator\WebhookSignatureValidator;
 use WebhookManager\Webhook;
-use WebhookManager\WebhookSignatureValidator;
 
 class WebhookSignatureValidatorTest extends TestCase
 {

@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WebhookManager;
+namespace WebhookManager\Validator;
+
+use WebhookManager\Webhook;
 
 /**
  * Class WebhookTokenValidator

@@ -6,16 +6,16 @@ require_once __DIR__.'/vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
-use WebhookManager\JsonWebhookPayload;
-use WebhookManager\JwtAuthentication;
+use WebhookManager\Authentication\JwtAuthentication;
 use WebhookManager\JwtWebhookHandler;
+use WebhookManager\Payload\JsonWebhookPayload;
 use WebhookManager\SimpleRetryPolicy;
 use WebhookManager\SimpleWebhookLogger;
 use WebhookManager\Webhook;
-use WebhookManager\WebhookEvent;
-use WebhookManager\WebhookManager;
 use WebhookManager\WebhookClient;
+use WebhookManager\WebhookEvent;
 use WebhookManager\WebhookHeaders;
+use WebhookManager\WebhookManager;
 
 $secretKey      = 'mysecretkey';
 $data           = [

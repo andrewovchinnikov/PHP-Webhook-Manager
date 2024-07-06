@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace WebhookManager;
 
+use WebhookManager\Payload\JsonWebhookPayload;
+
 /**
  * Class Webhook
  *

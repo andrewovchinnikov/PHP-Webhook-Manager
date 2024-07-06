@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace WebhookManager;
+namespace WebhookManager\Payload;
 
 use InvalidArgumentException;
+use WebhookManager\WebhookPayloadInterface;
 
 /**
  * Class for creating webhook payload in "application/x-www-form-urlencoded" format.
@@ -78,5 +79,15 @@ class FormUrlEncodedWebhookPayload implements WebhookPayloadInterface
     public function getFormat() : string
     {
         return 'application/x-www-form-urlencoded';
+    }
+
+    /**
+     * Returns webhook payload as string.
+     *
+     * @return string Webhook payload as string.
+     */
+    public function getPayload() : string
+    {
+        return $this->__toString();
     }
 }

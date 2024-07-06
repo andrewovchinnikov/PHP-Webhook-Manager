@@ -6,14 +6,14 @@ require_once __DIR__.'/vendor/autoload.php';
 
 use GuzzleHttp\Client;
 use Psr\Log\NullLogger;
+use WebhookManager\Authentication\SecretKeyAuthentication;
 use WebhookManager\ExampleWebhookHandler;
 use WebhookManager\SimpleRetryPolicy;
 use WebhookManager\SimpleWebhookLogger;
 use WebhookManager\Webhook;
+use WebhookManager\WebhookClient;
 use WebhookManager\WebhookEvent;
 use WebhookManager\WebhookManager;
-use WebhookManager\WebhookClient;
-use WebhookManager\SecretKeyAuthentication;
 
 // Создаем экземпляр HTTP-клиента
 $httpClient = new Client();

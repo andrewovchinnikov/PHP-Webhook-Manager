@@ -5,13 +5,13 @@ declare(strict_types=1);
 require_once __DIR__.'/vendor/autoload.php';
 
 use GuzzleHttp\Client;
+use WebhookManager\Authentication\SecretKeyAuthentication;
 use WebhookManager\ExampleWebhookHandler;
 use WebhookManager\SimpleRetryPolicy;
 use WebhookManager\Webhook;
+use WebhookManager\WebhookClient;
 use WebhookManager\WebhookEvent;
 use WebhookManager\WebhookManager;
-use WebhookManager\WebhookClient;
-use WebhookManager\SecretKeyAuthentication;
 
 $secretKey      = 'my-secret-key';
 $data           = '{"foo":"bar"}';

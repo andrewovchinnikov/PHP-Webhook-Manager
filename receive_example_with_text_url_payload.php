@@ -6,16 +6,16 @@ require_once __DIR__.'/vendor/autoload.php';
 
 use GuzzleHttp\Client;
 use WebhookManager\AsyncWebhookClient;
-use WebhookManager\IpAuthentication;
+use WebhookManager\Authentication\IpAuthentication;
 use WebhookManager\JwtWebhookHandler;
+use WebhookManager\Payload\FormUrlEncodedWebhookPayload;
+use WebhookManager\Payload\TextWebhookPayload;
 use WebhookManager\SimpleRetryPolicy;
 use WebhookManager\SimpleWebhookLogger;
 use WebhookManager\Webhook;
 use WebhookManager\WebhookEvent;
-use WebhookManager\WebhookManager;
-use WebhookManager\TextWebhookPayload;
-use WebhookManager\FormUrlEncodedWebhookPayload;
 use WebhookManager\WebhookHeaders;
+use WebhookManager\WebhookManager;
 
 $secretKey      = 'mysecretkey';
 $data           = ['foo' => 'bar', 'baz' => ['qux' => 'quux']];

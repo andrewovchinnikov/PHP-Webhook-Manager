@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace WebhookManager;
 
 use Psr\Http\Message\RequestInterface;
+use WebhookManager\Payload\JsonWebhookPayload;
 
 class WebhookBuilder
 {

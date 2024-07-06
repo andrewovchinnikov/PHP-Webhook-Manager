@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace WebhookManager;
+namespace WebhookManager\Payload;
 
 use InvalidArgumentException;
+use WebhookManager\WebhookPayloadInterface;
 
 /**
  * Class TextWebhookPayload
@@ -74,5 +75,15 @@ class TextWebhookPayload implements WebhookPayloadInterface
     public function getFormat() : string
     {
         return 'text/plain';
+    }
+
+    /**
+     * Returns the data of the payload as a string.
+     *
+     * @return string The data of the payload as a string.
+     */
+    public function getPayload() : string
+    {
+        return $this->__toString();
     }
 }

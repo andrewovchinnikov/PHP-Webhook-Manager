@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace WebhookManager;
+namespace WebhookManager\Payload;
+
+use WebhookManager\WebhookPayloadInterface;
 
 /**
  * Class JsonWebhookPayload
@@ -67,6 +69,11 @@ class JsonWebhookPayload implements WebhookPayloadInterface
         return json_encode($this->data);
     }
 
+    /**
+     * Returns the payload data as a string.
+     *
+     * @return string The payload data as a JSON string.
+     */
     public function getPayload() : string
     {
         return json_encode($this->data);

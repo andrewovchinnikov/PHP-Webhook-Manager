@@ -7,15 +7,15 @@ require_once __DIR__.'/vendor/autoload.php';
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
 use WebhookManager\AsyncWebhookClient;
-use WebhookManager\IpAuthentication;
+use WebhookManager\Authentication\IpAuthentication;
 use WebhookManager\JwtWebhookHandler;
+use WebhookManager\Payload\JsonWebhookPayload;
 use WebhookManager\SimpleRetryPolicy;
 use WebhookManager\SimpleWebhookLogger;
 use WebhookManager\Webhook;
 use WebhookManager\WebhookEvent;
-use WebhookManager\WebhookManager;
-use WebhookManager\JsonWebhookPayload;
 use WebhookManager\WebhookHeaders;
+use WebhookManager\WebhookManager;
 
 $secretKey      = 'mysecretkey';
 $data           = ['foo' => 'bar', 'baz' => ['qux' => 'quux']];

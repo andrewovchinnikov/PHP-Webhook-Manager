@@ -1,8 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use WebhookManager\Validator\WebhookTokenValidator;
 use WebhookManager\Webhook;
-use WebhookManager\WebhookTokenValidator;
 
 class WebhookTokenValidatorTest extends TestCase
 {

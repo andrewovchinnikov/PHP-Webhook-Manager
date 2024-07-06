@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace WebhookManager;
+namespace WebhookManager\Payload;
 
 use SimpleXMLElement;
+use WebhookManager\WebhookPayloadInterface;
 
 /**
  * Class XmlWebhookPayload

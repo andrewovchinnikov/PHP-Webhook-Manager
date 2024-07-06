@@ -6,20 +6,18 @@ require_once __DIR__.'/vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
-use Symfony\Component\Yaml\Yaml;
+use WebhookManager\Authentication\JwtAuthentication;
 use WebhookManager\HttpWebhookClient;
-use WebhookManager\JwtAuthentication;
 use WebhookManager\JwtWebhookHandler;
+use WebhookManager\Payload\JsonWebhookPayload;
+use WebhookManager\Payload\XmlWebhookPayload;
+use WebhookManager\Payload\YamlWebhookPayload;
 use WebhookManager\SimpleRetryPolicy;
 use WebhookManager\SimpleWebhookLogger;
 use WebhookManager\Webhook;
-use WebhookManager\WebhookDeliveryException;
 use WebhookManager\WebhookEvent;
-use WebhookManager\WebhookManager;
-use WebhookManager\JsonWebhookPayload;
-use WebhookManager\XmlWebhookPayload;
-use WebhookManager\YamlWebhookPayload;
 use WebhookManager\WebhookHeaders;
+use WebhookManager\WebhookManager;
 
 $secretKey      = 'mysecretkey';
 $data           = ['foo' => 'bar', 'baz' => ['qux' => 'quux']];

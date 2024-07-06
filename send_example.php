@@ -6,6 +6,7 @@ namespace WebhookManager;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use WebhookManager\Payload\JsonWebhookPayload;
 
 require __DIR__.'/vendor/autoload.php';
 

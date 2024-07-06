@@ -1,7 +1,8 @@
 <?php
 
-namespace WebhookManager;
+namespace WebhookManager\Authentication;
 
+use WebhookManager\Webhook;
 use WebhookManager\WebhookAuthentication;
 
 /**

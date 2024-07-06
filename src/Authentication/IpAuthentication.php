@@ -1,8 +1,10 @@
 <?php
 
-namespace WebhookManager;
+namespace WebhookManager\Authentication;
 
 use InvalidArgumentException;
+use WebhookManager\Webhook;
+use WebhookManager\WebhookAuthentication;
 
 /**
  * Class IpAuthentication

@@ -1,8 +1,9 @@
 <?php
 
-namespace WebhookManager;
+namespace WebhookManager\Payload;
 
 use Symfony\Component\Yaml\Yaml;
+use WebhookManager\WebhookPayloadInterface;
 
 /**
  * Class YamlWebhookPayload
