@@ -66,4 +66,9 @@ class JsonWebhookPayload implements WebhookPayloadInterface
     {
         return json_encode($this->data);
     }
+
+    public function getPayload() : string
+    {
+        return json_encode($this->data);
+    }
 }
