@@ -6,6 +6,7 @@ require_once __DIR__.'/vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
+use WebhookManager\JsonWebhookPayload;
 use WebhookManager\JwtAuthentication;
 use WebhookManager\JwtWebhookHandler;
 use WebhookManager\SimpleRetryPolicy;
@@ -14,9 +15,13 @@ use WebhookManager\Webhook;
 use WebhookManager\WebhookEvent;
 use WebhookManager\WebhookManager;
 use WebhookManager\WebhookClient;
+use WebhookManager\WebhookHeaders;
 
 $secretKey      = 'mysecretkey';
-$data           = '{"foo":"bar"}';
+$data           = [
+    'key1' => 'value1',
+    'key2' => 'value2',
+    ];
 $httpClient     = new Client();
 $retryPolicy    = new SimpleRetryPolicy(3);
 $client         = new WebhookClient($httpClient, $retryPolicy);
@@ -27,13 +32,15 @@ $handler        = new JwtWebhookHandler($secretKey);
 
 $token = JWT::encode(['data' => $data], $secretKey, 'HS256');
 
-$webhook = new Webhook('https://example.com', [
+$headers = new WebhookHeaders([
     'Authorization' => "$token",
     'Content-Type'  => 'application/json',
-], $data);
+]);
+
+$payload = new JsonWebhookPayload($data);
+$webhook = new Webhook('https://example.com', $headers, $payload);
 $event   = new WebhookEvent('test_event', $webhook);
 
 $manager->registerHandler('test_event', $handler);
 
 $manager->triggerEvent($event);
-

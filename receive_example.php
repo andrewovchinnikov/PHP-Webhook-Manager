@@ -1,22 +1,72 @@
 <?php
 
+// включаем строгий режим типизации
 declare(strict_types=1);
 
+// подключаем автозагрузчик композера
 require_once __DIR__.'/vendor/autoload.php';
 
-use WebhookManager\ExampleWebhookHandler;
+// подключаем необходимые классы
+use GuzzleHttp\Client;
+use WebhookManager\HttpWebhookClient;
+use WebhookManager\JwtAuthentication;
+use WebhookManager\JwtWebhookHandler;
+use WebhookManager\SimpleRetryPolicy;
+use WebhookManager\SimpleWebhookLogger;
+use WebhookManager\TextWebhookPayload;
 use WebhookManager\Webhook;
 use WebhookManager\WebhookEvent;
+use WebhookManager\WebhookHeaders;
 use WebhookManager\WebhookManager;
-use WebhookManager\WebhookClient;
 
-$client  = new WebhookClient();
-$manager = new WebhookManager($client);
-$handler = new ExampleWebhookHandler();
+// секретный ключ для JWT-авторизации
+$secretKey = 'mysecretkey';
 
-$webhook = new Webhook('https://example.com', ['foo' => 'bar']);
-$event   = new WebhookEvent('test_event', $webhook);
+// данные для отправки в веб-хук
+$data = ['foo' => 'bar', 'baz' => ['qux' => 'quux']];
 
+// создаем HTTP-клиент для отправки запросов
+$httpClient = new Client();
+
+// создаем политику повтора отправки веб-хука в случае ошибки
+$retryPolicy = new SimpleRetryPolicy(3);
+
+// создаем клиент для отправки веб-хуков
+$client = new HttpWebhookClient($httpClient, $retryPolicy);
+
+// создаем объект для JWT-авторизации
+$authentication = new JwtAuthentication($secretKey);
+
+// создаем логгер для веб-хуков
+$logger = new SimpleWebhookLogger();
+
+// создаем менеджер для веб-хуков
+$manager = new WebhookManager($client, $authentication, $logger);
+
+// создаем обработчик для входящих веб-хуков
+$handler = new JwtWebhookHandler($secretKey);
+
+// создаем текстовую полезную нагрузку для веб-хука
+$textPayload = new TextWebhookPayload('Hello, world!');
+
+// создаем заголовки для веб-хука
+$textHeaders = new WebhookHeaders([
+    'Content-Type' => 'text/plain',
+]);
+
+// создаем веб-хук
+$webhook = new Webhook('https://example.com', $textHeaders, $textPayload);
+
+// создаем событие для веб-хука
+$event = new WebhookEvent('test_event', $webhook);
+
+// регистрируем обработчик для события
 $manager->registerHandler('test_event', $handler);
 
-$manager->triggerEvent($event);
+// запускаем событие
+try {
+    $manager->triggerEvent($event);
+} catch (Exception $e) {
+    // выводим сообщение об ошибке
+    echo $e->getMessage();
+}

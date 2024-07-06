@@ -2,12 +2,45 @@
 
 declare(strict_types=1);
 
-require_once __DIR__.'/vendor/autoload.php';
+namespace WebhookManager;
 
-use WebhookManager\Webhook;
-use WebhookManager\WebhookClient;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
-$webhook = new Webhook('https://webhook.site/6acc75e2-0b38-4c87-b41a-3e8ab63cdd0d', ['Content-Type' => 'application/json'], '{"foo": "bar"}');
+require __DIR__.'/vendor/autoload.php';
 
-$client = new WebhookClient();
-$client->send($webhook);
+// Create a new HTTP client
+$httpClient = new Client();
+
+// Create a new retry policy that retries up to 3 times
+$retryPolicy = new SimpleRetryPolicy(3);
+
+// Create a new webhook client
+$webhookClient = new WebhookClient($httpClient, $retryPolicy);
+
+$payload = new JsonWebhookPayload([
+    'key1' => 'value1',
+    'key2' => 'value2',
+]);
+
+// Create a new webhook object
+$webhook = new Webhook(
+    'https://webhook.site/6acc75e2-0b38-4c87-b41a-3e8ab63cdd0d',
+    new WebhookHeaders([
+        'Content-Type' => 'application/json',
+    ]),
+    $payload
+);
+
+try {
+    // Send the webhook
+    $response = $webhookClient->send($webhook);
+
+    // Print the response status code and body
+    echo 'Response status code: '.$response->getStatusCode().PHP_EOL;
+    echo 'Response body: '.$response->getBody()->getContents().PHP_EOL;
+
+} catch (GuzzleException $exception) {
+    // Print the error message
+    echo 'Error: '.$exception->getMessage().PHP_EOL;
+}
