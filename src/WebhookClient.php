@@ -30,7 +30,7 @@ class WebhookClient implements WebhookClientInterface
                 'POST',
                 $webhook->getUrl(),
                 [
-                    'headers' => $webhook->getHeaders(),
+                    'headers' => $webhook->getHeaders()->getHeaders(),
                     'body'    => $webhook->getPayload(),
                 ]
             );
@@ -45,7 +45,7 @@ class WebhookClient implements WebhookClientInterface
                 throw $exception;
             }
 
-            usleep(100000); // Wait for 100ms before retrying
+            usleep(10000); // Wait for 10ms before retrying
 
             // Recursively call the 'send' method with the updated webhook object
             return $this->send($webhook);
