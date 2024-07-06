@@ -43,4 +43,8 @@ $event   = new WebhookEvent('test_event', $webhook);
 
 $manager->registerHandler('test_event', $handler);
 
-$manager->triggerEvent($event);
+try {
+    $manager->triggerEvent($event);
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
