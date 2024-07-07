@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WebhookManager\Clients;
 
-use exeption\WebhookDeliveryException;
+use exception\WebhookDeliveryException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;

@@ -11,7 +11,7 @@ use WebhookManager\Webhook\Webhook;
  * This class provides IP authentication for webhooks.
  * It checks if the client IP address is in the list of allowed IP addresses.
  */
-class IpAuthenticationInterface implements WebhookAuthenticationInterface
+class IpAuthentication implements WebhookAuthenticationInterface
 {
     /**
      * @var array $allowedIps The list of allowed IP addresses.

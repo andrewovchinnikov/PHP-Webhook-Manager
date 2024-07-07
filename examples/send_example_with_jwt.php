@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
-use exeption\WebhookDeliveryException;
+use exception\WebhookDeliveryException;
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
-use WebhookManager\Authentication\JwtAuthenticationInterface;
+use WebhookManager\Authentication\JwtAuthentication;
 use WebhookManager\Events\WebhookEvent;
 use WebhookManager\Handlers\JwtWebhookHandler;
 use WebhookManager\Clients\HttpWebhookClient;
@@ -21,7 +21,7 @@ $data           = 'Тестовые данные';
 $httpClient     = new Client();
 $retryPolicy    = new SimpleRetryPolicy(3);
 $client         = new HttpWebhookClient($httpClient, $retryPolicy);
-$authentication = new JwtAuthenticationInterface($secretKey);
+$authentication = new JwtAuthentication($secretKey);
 $logger         = new SimpleWebhookLogger();
 $manager        = new WebhookManager($client, $authentication, $logger);
 $handler        = new JwtWebhookHandler($secretKey);

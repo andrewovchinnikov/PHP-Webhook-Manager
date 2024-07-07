@@ -13,7 +13,7 @@ use WebhookManager\Webhook\Webhook;
  *
  * This class provides JWT based authentication for webhooks.
  */
-class JwtAuthenticationInterface implements WebhookAuthenticationInterface
+class JwtAuthentication implements WebhookAuthenticationInterface
 {
     /**
      * @var string $secretKey The secret key used to sign the JWT token.

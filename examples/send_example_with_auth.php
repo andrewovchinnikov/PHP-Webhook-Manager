@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use GuzzleHttp\Client;
-use WebhookManager\Authentication\SecretKeyAuthenticationInterface;
+use WebhookManager\Authentication\SecretKeyAuthentication;
 use WebhookManager\Events\WebhookEvent;
 use WebhookManager\Handlers\ExampleWebhookHandler;
 use WebhookManager\Policy\SimpleRetryPolicy;
@@ -18,7 +18,7 @@ $data           = '{"foo":"bar"}';
 $httpClient     = new Client();
 $retryPolicy    = new SimpleRetryPolicy(3);
 $client         = new WebhookClient($httpClient, $retryPolicy);
-$authentication = new SecretKeyAuthenticationInterface($secretKey);
+$authentication = new SecretKeyAuthentication($secretKey);
 $manager        = new WebhookManager($client, $authentication);
 $handler        = new ExampleWebhookHandler();
 

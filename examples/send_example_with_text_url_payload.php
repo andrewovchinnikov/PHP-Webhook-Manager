@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use GuzzleHttp\Client;
+use WebhookManager\Authentication\SecretKeyAuthentication;
 use WebhookManager\Events\WebhookEvent;
 use WebhookManager\Handlers\JwtWebhookHandler;
 use WebhookManager\Headers\WebhookHeaders;
@@ -22,6 +23,7 @@ $httpClient     = new Client();
 $retryPolicy    = new SimpleRetryPolicy(3);
 $client         = new AsyncWebhookClient($httpClient, $retryPolicy);
 $logger         = new SimpleWebhookLogger();
+$authentication = new SecretKeyAuthentication($secretKey);
 $manager        = new WebhookManager($client, $authentication, $logger);
 $handler        = new JwtWebhookHandler($secretKey);
 

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
-use WebhookManager\Authentication\IpAuthenticationInterface;
+use WebhookManager\Authentication\IpAuthentication;
 use WebhookManager\Events\WebhookEvent;
 use WebhookManager\Handlers\JwtWebhookHandler;
 use WebhookManager\Headers\WebhookHeaders;
@@ -23,7 +23,7 @@ $httpClient     = new Client();
 $retryPolicy    = new SimpleRetryPolicy(3);
 $client         = new AsyncWebhookClient($httpClient, $retryPolicy);
 $allowedIps     = ['127.0.0.1', '::1']; // разрешенные IP-адреса
-$authentication = new IpAuthenticationInterface($allowedIps);
+$authentication = new IpAuthentication($allowedIps);
 $logger         = new SimpleWebhookLogger();
 $manager        = new WebhookManager($client, $authentication, $logger);
 $handler        = new JwtWebhookHandler($secretKey);

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use GuzzleHttp\Client;
 use Psr\Log\NullLogger;
-use WebhookManager\Authentication\SecretKeyAuthenticationInterface;
+use WebhookManager\Authentication\SecretKeyAuthentication;
 use WebhookManager\Events\WebhookEvent;
 use WebhookManager\Handlers\ExampleWebhookHandler;
 use WebhookManager\Loggers\SimpleWebhookLogger;
@@ -29,7 +29,7 @@ $logger = new SimpleWebhookLogger();
 
 // Создаем экземпляр аутентификации веб-хука
 $secretKey      = 'my-secret-key';
-$authentication = new SecretKeyAuthenticationInterface($secretKey);
+$authentication = new SecretKeyAuthentication($secretKey);
 
 // Создаем экземпляр менеджера веб-хуков
 $manager = new WebhookManager($client, $authentication, $logger);

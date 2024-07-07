@@ -10,7 +10,7 @@ use WebhookManager\Webhook\Webhook;
  * This class provides authentication for incoming webhooks using a secret key.
  * It checks the X-Signature header of the incoming request against a generated HMAC hash of the request payload.
  */
-class SecretKeyAuthenticationInterface implements WebhookAuthenticationInterface
+class SecretKeyAuthentication implements WebhookAuthenticationInterface
 {
     /**
      * @var string $secretKey The secret key used to generate the HMAC hash.
