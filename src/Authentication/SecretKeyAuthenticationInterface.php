@@ -2,8 +2,7 @@
 
 namespace WebhookManager\Authentication;
 
-use WebhookManager\Webhook;
-use WebhookManager\WebhookAuthenticationInterface;
+use WebhookManager\Webhook\Webhook;
 
 /**
  * Class SecretKeyAuthentication

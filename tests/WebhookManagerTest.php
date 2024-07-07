@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-use WebhookManager\Webhook;
 use PHPUnit\Framework\TestCase;
-use WebhookManager\WebhookManager;
-use WebhookManager\WebhookEvent;
-use WebhookManager\WebhookHandlerInterface;
-use WebhookManager\WebhookClientInterface;
-use WebhookManager\WebhookAuthenticationInterface;
-use WebhookManager\WebhookLoggerInterface;
+use WebhookManager\Authentication\WebhookAuthenticationInterface;
+use WebhookManager\Events\WebhookEvent;
+use WebhookManager\Handlers\WebhookHandlerInterface;
+use WebhookManager\Clients\WebhookClientInterface;
+use WebhookManager\Loggers\WebhookLoggerInterface;
+use WebhookManager\Webhook\Webhook;
+use WebhookManager\Webhook\WebhookManager;
 
 // Mock interfaces
 class MockWebhookHandler implements WebhookHandlerInterface

@@ -6,8 +6,7 @@ namespace WebhookManager\Authentication;
 
 use Exception;
 use Firebase\JWT\JWT;
-use WebhookManager\Webhook;
-use WebhookManager\WebhookAuthenticationInterface;
+use WebhookManager\Webhook\Webhook;
 
 /**
  * Class JwtAuthentication

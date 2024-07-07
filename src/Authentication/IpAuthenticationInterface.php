@@ -3,8 +3,7 @@
 namespace WebhookManager\Authentication;
 
 use InvalidArgumentException;
-use WebhookManager\Webhook;
-use WebhookManager\WebhookAuthenticationInterface;
+use WebhookManager\Webhook\Webhook;
 
 /**
  * Class IpAuthentication
