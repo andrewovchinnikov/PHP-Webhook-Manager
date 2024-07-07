@@ -10,7 +10,7 @@ use WebhookManager\JwtWebhookHandler;
 use WebhookManager\Payload\FormUrlEncodedWebhookPayload;
 use WebhookManager\Payload\TextWebhookPayload;
 use WebhookManager\SimpleRetryPolicy;
-use WebhookManager\SimpleWebhookLogger;
+use WebhookManager\SimpleWebhookLoggerInterface;
 use WebhookManager\Webhook;
 use WebhookManager\WebhookEvent;
 use WebhookManager\WebhookHeaders;
@@ -21,7 +21,7 @@ $data           = ['foo' => 'bar', 'baz' => ['qux' => 'quux']];
 $httpClient     = new Client();
 $retryPolicy    = new SimpleRetryPolicy(3);
 $client         = new AsyncWebhookClient($httpClient, $retryPolicy);
-$logger         = new SimpleWebhookLogger();
+$logger         = new SimpleWebhookLoggerInterface();
 $manager        = new WebhookManager($client, $authentication, $logger);
 $handler        = new JwtWebhookHandler($secretKey);
 

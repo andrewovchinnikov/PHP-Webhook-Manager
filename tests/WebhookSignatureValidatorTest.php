@@ -9,11 +9,11 @@ class WebhookSignatureValidatorTest extends TestCase
     public function testValidate(): void
     {
         $validator = new WebhookSignatureValidator('secret');
-        $webhook = new Webhook('https://example.com', ['X-Signature' => 'sha256=abc123'], '{}');
+        $webhook = new Webhook('https://example.com');
 
         $this->assertFalse($validator->validate($webhook));
 
-        $webhook = new Webhook('https://example.com', ['X-Signature' => 'sha256=5f4dcc3b5aa765d61d8327deb882cf99'], '{}');
+        $webhook = new Webhook('https://example.com');
         $this->assertTrue($validator->validate($webhook));
     }
 }

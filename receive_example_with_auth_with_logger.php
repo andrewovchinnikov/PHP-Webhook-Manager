@@ -6,10 +6,10 @@ require_once __DIR__.'/vendor/autoload.php';
 
 use GuzzleHttp\Client;
 use Psr\Log\NullLogger;
-use WebhookManager\Authentication\SecretKeyAuthentication;
+use WebhookManager\Authentication\SecretKeyAuthenticationInterface;
 use WebhookManager\ExampleWebhookHandler;
 use WebhookManager\SimpleRetryPolicy;
-use WebhookManager\SimpleWebhookLogger;
+use WebhookManager\SimpleWebhookLoggerInterface;
 use WebhookManager\Webhook;
 use WebhookManager\WebhookClient;
 use WebhookManager\WebhookEvent;
@@ -25,11 +25,11 @@ $retryPolicy = new SimpleRetryPolicy(3);
 $client = new WebhookClient($httpClient, $retryPolicy);
 
 // Создаем логгер
-$logger = new SimpleWebhookLogger();
+$logger = new SimpleWebhookLoggerInterface();
 
 // Создаем экземпляр аутентификации веб-хука
 $secretKey      = 'my-secret-key';
-$authentication = new SecretKeyAuthentication($secretKey);
+$authentication = new SecretKeyAuthenticationInterface($secretKey);
 
 // Создаем экземпляр менеджера веб-хуков
 $manager = new WebhookManager($client, $authentication, $logger);

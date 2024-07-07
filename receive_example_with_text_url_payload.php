@@ -6,12 +6,12 @@ require_once __DIR__.'/vendor/autoload.php';
 
 use GuzzleHttp\Client;
 use WebhookManager\AsyncWebhookClient;
-use WebhookManager\Authentication\IpAuthentication;
+use WebhookManager\Authentication\IpAuthenticationInterface;
 use WebhookManager\JwtWebhookHandler;
 use WebhookManager\Payload\FormUrlEncodedWebhookPayload;
 use WebhookManager\Payload\TextWebhookPayload;
 use WebhookManager\SimpleRetryPolicy;
-use WebhookManager\SimpleWebhookLogger;
+use WebhookManager\SimpleWebhookLoggerInterface;
 use WebhookManager\Webhook;
 use WebhookManager\WebhookEvent;
 use WebhookManager\WebhookHeaders;
@@ -23,8 +23,8 @@ $httpClient     = new Client();
 $retryPolicy    = new SimpleRetryPolicy(3);
 $client         = new AsyncWebhookClient($httpClient, $retryPolicy);
 $allowedIps     = ['127.0.0.1', '::1']; // разрешенные IP-адреса
-$authentication = new IpAuthentication($allowedIps);
-$logger         = new SimpleWebhookLogger();
+$authentication = new IpAuthenticationInterface($allowedIps);
+$logger         = new SimpleWebhookLoggerInterface();
 $manager        = new WebhookManager($client, $authentication, $logger);
 $handler        = new JwtWebhookHandler($secretKey);
 

@@ -6,11 +6,11 @@ require_once __DIR__.'/vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
-use WebhookManager\Authentication\JwtAuthentication;
+use WebhookManager\Authentication\JwtAuthenticationInterface;
 use WebhookManager\JwtWebhookHandler;
 use WebhookManager\Payload\JsonWebhookPayload;
 use WebhookManager\SimpleRetryPolicy;
-use WebhookManager\SimpleWebhookLogger;
+use WebhookManager\SimpleWebhookLoggerInterface;
 use WebhookManager\Webhook;
 use WebhookManager\WebhookClient;
 use WebhookManager\WebhookEvent;
@@ -25,8 +25,8 @@ $data           = [
 $httpClient     = new Client();
 $retryPolicy    = new SimpleRetryPolicy(3);
 $client         = new WebhookClient($httpClient, $retryPolicy);
-$authentication = new JwtAuthentication($secretKey);
-$logger         = new SimpleWebhookLogger();
+$authentication = new JwtAuthenticationInterface($secretKey);
+$logger         = new SimpleWebhookLoggerInterface();
 $manager        = new WebhookManager($client, $authentication, $logger);
 $handler        = new JwtWebhookHandler($secretKey);
 

@@ -7,14 +7,14 @@ namespace WebhookManager\Authentication;
 use Exception;
 use Firebase\JWT\JWT;
 use WebhookManager\Webhook;
-use WebhookManager\WebhookAuthentication;
+use WebhookManager\WebhookAuthenticationInterface;
 
 /**
  * Class JwtAuthentication
  *
  * This class provides JWT based authentication for webhooks.
  */
-class JwtAuthentication implements WebhookAuthentication
+class JwtAuthenticationInterface implements WebhookAuthenticationInterface
 {
     /**
      * @var string $secretKey The secret key used to sign the JWT token.

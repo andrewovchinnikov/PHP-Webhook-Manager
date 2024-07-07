@@ -8,7 +8,7 @@ namespace WebhookManager;
  * SimpleWebhookLogger class is an implementation of the WebhookLogger interface.
  * It logs messages using the error_log() function.
  */
-class SimpleWebhookLogger implements WebhookLogger
+class SimpleWebhookLoggerInterface implements WebhookLoggerInterface
 {
     /**
      * Logs a message using the error_log() function.

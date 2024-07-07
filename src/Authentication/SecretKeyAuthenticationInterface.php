@@ -3,7 +3,7 @@
 namespace WebhookManager\Authentication;
 
 use WebhookManager\Webhook;
-use WebhookManager\WebhookAuthentication;
+use WebhookManager\WebhookAuthenticationInterface;
 
 /**
  * Class SecretKeyAuthentication
@@ -11,7 +11,7 @@ use WebhookManager\WebhookAuthentication;
  * This class provides authentication for incoming webhooks using a secret key.
  * It checks the X-Signature header of the incoming request against a generated HMAC hash of the request payload.
  */
-class SecretKeyAuthentication implements WebhookAuthentication
+class SecretKeyAuthenticationInterface implements WebhookAuthenticationInterface
 {
     /**
      * @var string $secretKey The secret key used to generate the HMAC hash.

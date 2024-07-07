@@ -24,23 +24,23 @@ class WebhookManager
     private WebhookClientInterface $client;
 
     /**
-     * @var WebhookAuthentication The authentication mechanism used for webhook requests.
+     * @var WebhookAuthenticationInterface The authentication mechanism used for webhook requests.
      */
-    private WebhookAuthentication $authentication;
+    private WebhookAuthenticationInterface $authentication;
 
     /**
-     * @var WebhookLogger The logger used to log webhook events.
+     * @var WebhookLoggerInterface The logger used to log webhook events.
      */
-    private WebhookLogger $logger;
+    private WebhookLoggerInterface $logger;
 
     /**
      * WebhookManager constructor.
      *
-     * @param WebhookClientInterface $client         The webhook client used to send requests.
-     * @param WebhookAuthentication  $authentication The authentication mechanism used for webhook requests.
-     * @param WebhookLogger|null     $logger         The logger used to log webhook events.
+     * @param WebhookClientInterface         $client         The webhook client used to send requests.
+     * @param WebhookAuthenticationInterface $authentication The authentication mechanism used for webhook requests.
+     * @param WebhookLoggerInterface|null    $logger         The logger used to log webhook events.
      */
-    public function __construct(WebhookClientInterface $client, WebhookAuthentication $authentication, WebhookLogger $logger = null)
+    public function __construct(WebhookClientInterface $client, WebhookAuthenticationInterface $authentication, WebhookLoggerInterface $logger = null)
     {
         $this->client         = $client;
         $this->authentication = $authentication;
@@ -50,11 +50,11 @@ class WebhookManager
     /**
      * Registers a handler for a specific event name.
      *
-     * @param string                     $eventName      The name of the event to register the handler for.
-     * @param WebhookHandlerInterface    $handler        The handler to register.
-     * @param WebhookAuthentication|null $authentication The authentication mechanism used for this specific handler.
+     * @param string                              $eventName      The name of the event to register the handler for.
+     * @param WebhookHandlerInterface             $handler        The handler to register.
+     * @param WebhookAuthenticationInterface|null $authentication The authentication mechanism used for this specific handler.
      */
-    public function registerHandler(string $eventName, WebhookHandlerInterface $handler, WebhookAuthentication $authentication = null) : void
+    public function registerHandler(string $eventName, WebhookHandlerInterface $handler, WebhookAuthenticationInterface $authentication = null) : void
     {
         if (!isset($this->handlers[$eventName])) {
             $this->handlers[$eventName] = [];
@@ -77,9 +77,10 @@ class WebhookManager
     {
         $this->logger->log(sprintf('Triggering event "%s"', $event->getName()));
 
-        foreach ($this->handlers[$event->getName()] as $handlerData) {
-            $handler = $handlerData['handler'];
-            $handler->handle($event);
+        if (isset($this->handlers[$event->getName()])) {
+            foreach ($this->handlers[$event->getName()] as $handlerData) {
+                $handlerData['handler']->handle($event);
+            }
         }
 
         if ($this->client instanceof AsyncWebhookClient) {
@@ -89,5 +90,38 @@ class WebhookManager
         }
 
         $this->logger->log(sprintf('Event "%s" completed with response code %d', $event->getName(), $event->getWebhook()->getResponseCode()));
+    }
+
+    /**
+     * Checks if a specific handler is registered for a specific event.
+     *
+     * @param string                  $eventName The name of the event to check.
+     * @param WebhookHandlerInterface $handler   The handler to check.
+     *
+     * @return bool True if the handler is registered, false otherwise.
+     */
+    public function hasHandler(string $eventName, WebhookHandlerInterface $handler) : bool
+    {
+        if (!isset($this->handlers[$eventName])) {
+            return false;
+        }
+
+        foreach ($this->handlers[$eventName] as $handlerData) {
+            if ($handlerData['handler'] === $handler) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns all registered handlers for a specific event.
+     *
+     * @return array
+     */
+    public function getHandlers() : array
+    {
+        return $this->handlers;
     }
 }

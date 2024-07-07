@@ -9,7 +9,7 @@ namespace WebhookManager;
  *
  * This interface defines the method that must be implemented by a class that wants to handle logging for webhooks.
  */
-interface WebhookLogger
+interface WebhookLoggerInterface
 {
     /**
      * Logs a message.

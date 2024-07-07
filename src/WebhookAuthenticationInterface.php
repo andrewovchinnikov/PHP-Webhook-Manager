@@ -10,7 +10,7 @@ namespace WebhookManager;
  * This interface defines the method for authenticating a webhook.
  * Any class that implements this interface must define the authenticate() method.
  */
-interface WebhookAuthentication
+interface WebhookAuthenticationInterface
 {
     /**
      * Authenticates a webhook.

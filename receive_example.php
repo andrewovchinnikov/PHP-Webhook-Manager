@@ -8,12 +8,12 @@ require_once __DIR__.'/vendor/autoload.php';
 
 // подключаем необходимые классы
 use GuzzleHttp\Client;
-use WebhookManager\Authentication\JwtAuthentication;
+use WebhookManager\Authentication\JwtAuthenticationInterface;
 use WebhookManager\HttpWebhookClient;
 use WebhookManager\JwtWebhookHandler;
 use WebhookManager\Payload\TextWebhookPayload;
 use WebhookManager\SimpleRetryPolicy;
-use WebhookManager\SimpleWebhookLogger;
+use WebhookManager\SimpleWebhookLoggerInterface;
 use WebhookManager\Webhook;
 use WebhookManager\WebhookEvent;
 use WebhookManager\WebhookHeaders;
@@ -35,10 +35,10 @@ $retryPolicy = new SimpleRetryPolicy(3);
 $client = new HttpWebhookClient($httpClient, $retryPolicy);
 
 // создаем объект для JWT-авторизации
-$authentication = new JwtAuthentication($secretKey);
+$authentication = new JwtAuthenticationInterface($secretKey);
 
 // создаем логгер для веб-хуков
-$logger = new SimpleWebhookLogger();
+$logger = new SimpleWebhookLoggerInterface();
 
 // создаем менеджер для веб-хуков
 $manager = new WebhookManager($client, $authentication, $logger);

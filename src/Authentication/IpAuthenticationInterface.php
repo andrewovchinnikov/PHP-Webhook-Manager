@@ -4,7 +4,7 @@ namespace WebhookManager\Authentication;
 
 use InvalidArgumentException;
 use WebhookManager\Webhook;
-use WebhookManager\WebhookAuthentication;
+use WebhookManager\WebhookAuthenticationInterface;
 
 /**
  * Class IpAuthentication
@@ -12,7 +12,7 @@ use WebhookManager\WebhookAuthentication;
  * This class provides IP authentication for webhooks.
  * It checks if the client IP address is in the list of allowed IP addresses.
  */
-class IpAuthentication implements WebhookAuthentication
+class IpAuthenticationInterface implements WebhookAuthenticationInterface
 {
     /**
      * @var array $allowedIps The list of allowed IP addresses.
