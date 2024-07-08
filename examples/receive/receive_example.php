@@ -4,7 +4,8 @@
 declare(strict_types=1);
 
 // подключаем автозагрузчик композера
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../.././vendor/autoload.php';
+
 
 // подключаем необходимые классы
 use GuzzleHttp\Client;

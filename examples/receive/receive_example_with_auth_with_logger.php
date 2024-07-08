@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../.././vendor/autoload.php';
 
 use GuzzleHttp\Client;
-use Psr\Log\NullLogger;
 use WebhookManager\Authentication\SecretKeyAuthentication;
 use WebhookManager\Events\WebhookEvent;
 use WebhookManager\Handlers\ExampleWebhookHandler;

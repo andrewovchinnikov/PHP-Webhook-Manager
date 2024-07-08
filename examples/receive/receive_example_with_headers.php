@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../.././vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client;
@@ -10,7 +10,7 @@ use WebhookManager\Authentication\JwtAuthentication;
 use WebhookManager\Events\WebhookEvent;
 use WebhookManager\Handlers\JwtWebhookHandler;
 use WebhookManager\Headers\WebhookHeaders;
-use WebhookManager\Clients\AsyncWebhookClient;
+use WebhookManager\Clients\HttpWebhookClient;
 use WebhookManager\Loggers\SimpleWebhookLogger;
 use WebhookManager\Payloads\JsonWebhookPayload;
 use WebhookManager\Payloads\XmlWebhookPayload;
@@ -23,7 +23,7 @@ $secretKey      = 'mysecretkey';
 $data           = ['foo' => 'bar', 'baz' => ['qux' => 'quux']];
 $httpClient     = new Client();
 $retryPolicy    = new SimpleRetryPolicy(3);
-$client         = new AsyncWebhookClient($httpClient, $retryPolicy);
+$client         = new HttpWebhookClient($httpClient, $retryPolicy);
 $authentication = new JwtAuthentication($secretKey);
 $logger         = new SimpleWebhookLogger();
 $manager        = new WebhookManager($client, $authentication, $logger);

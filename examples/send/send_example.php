@@ -12,7 +12,7 @@ use WebhookManager\Policy\SimpleRetryPolicy;
 use WebhookManager\Webhook\Webhook;
 use WebhookManager\Webhook\WebhookClient;
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../.././vendor/autoload.php';
 
 // Create a new HTTP client
 $httpClient = new Client();
