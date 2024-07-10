@@ -43,7 +43,7 @@ class AsyncWebhookClient implements WebhookClientInterface
             'POST',
             $webhook->getUrl(),
             [
-                'headers' => $webhook->getHeaders(),
+                'headers' => $webhook->getHeaders()->getHeaders(),
                 'body'    => $webhook->getPayload(),
             ]
         );
